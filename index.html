@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>Keuangan HUT GKPS Binjai 63</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --navy: #1a2e5a;
+    --navy-light: #243872;
+    --gold: #c9a227;
+    --gold-light: #f0c94a;
+    --green: #1a7a4a;
+    --green-light: #e8f7ef;
+    --red: #c0392b;
+    --red-light: #fdecea;
+    --blue-light: #eaf1fb;
+    --bg: #f4f6fb;
+    --card: #ffffff;
+    --text: #1a2035;
+    --muted: #7a8299;
+    --border: #e2e8f4;
+    --radius: 16px;
+    --shadow: 0 4px 24px rgba(26,46,90,0.10);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .app-header {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+    padding: 20px 20px 24px;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 16px rgba(26,46,90,0.18);
+  }
+  .app-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; color: #fff; line-height: 1.3;
+  }
+  .app-header p { font-size: 11px; color: rgba(255,255,255,0.65); margin-top: 2px; }
+  .header-row { display: flex; align-items: center; justify-content: space-between; }
+  .header-badge {
+    background: var(--gold); color: var(--navy);
+    font-size: 10px; font-weight: 700; padding: 4px 10px;
+    border-radius: 20px; letter-spacing: 0.5px;
+  }
+
+  /* ── NAV TABS ── */
+  .nav-tabs {
+    display: flex; background: var(--navy-light);
+    padding: 0 12px; gap: 4px; overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-tabs::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    flex: none; padding: 10px 14px;
+    font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.55);
+    border: none; background: none; cursor: pointer;
+    border-bottom: 3px solid transparent; white-space: nowrap;
+    font-family: inherit; transition: all 0.2s;
+  }
+  .tab-btn.active { color: var(--gold-light); border-bottom-color: var(--gold); }
+
+  /* ── MAIN ── */
+  .main { padding: 16px; max-width: 480px; margin: 0 auto; }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--card); border-radius: var(--radius);
+    box-shadow: var(--shadow); padding: 18px; margin-bottom: 14px;
+  }
+  .card-title {
+    font-size: 13px; font-weight: 700; color: var(--navy);
+    margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+  }
+  .card-title .icon {
+    width: 30px; height: 30px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+  }
+
+  /* ── STAT BOXES ── */
+  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+  .stat-box {
+    background: var(--card); border-radius: 14px;
+    padding: 14px 12px; box-shadow: var(--shadow);
+  }
+  .stat-box .label { font-size: 10px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .stat-box .value { font-size: 16px; font-weight: 800; margin-top: 4px; line-height: 1.2; }
+  .stat-box .sub { font-size: 10px; color: var(--muted); margin-top: 2px; }
+  .stat-box.green { background: var(--green-light); }
+  .stat-box.green .value { color: var(--green); }
+  .stat-box.red { background: var(--red-light); }
+  .stat-box.red .value { color: var(--red); }
+  .stat-box.gold { background: #fff8e1; }
+  .stat-box.gold .value { color: #b8860b; }
+  .stat-box.blue { background: var(--blue-light); }
+  .stat-box.blue .value { color: var(--navy); }
+
+  /* SALDO BESAR */
+  .saldo-card {
+    background: linear-gradient(135deg, var(--navy), var(--navy-light));
+    border-radius: var(--radius); padding: 20px;
+    margin-bottom: 14px; color: white;
+  }
+  .saldo-card .saldo-label { font-size: 11px; opacity: 0.7; font-weight: 600; text-transform: uppercase; }
+  .saldo-card .saldo-value { font-size: 28px; font-weight: 800; margin: 6px 0 2px; }
+  .saldo-card .saldo-status { font-size: 12px; color: var(--gold-light); font-weight: 600; }
+
+  /* ── FORM ── */
+  .form-group { margin-bottom: 14px; }
+  .form-label { font-size: 12px; font-weight: 600; color: var(--navy); margin-bottom: 6px; display: block; }
+  .form-input, .form-select, .form-textarea {
+    width: 100%; padding: 12px 14px;
+    border: 1.5px solid var(--border); border-radius: 10px;
+    font-size: 14px; font-family: inherit; color: var(--text);
+    background: #fff; outline: none; transition: border 0.2s;
+    -webkit-appearance: none;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: var(--navy);
+  }
+  .form-textarea { resize: vertical; min-height: 70px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  /* UPLOAD FOTO */
+  .upload-area {
+    border: 2px dashed var(--border); border-radius: 12px;
+    padding: 20px; text-align: center; cursor: pointer;
+    background: var(--bg); transition: all 0.2s;
+  }
+  .upload-area:hover { border-color: var(--navy); background: var(--blue-light); }
+  .upload-area .upload-icon { font-size: 28px; margin-bottom: 6px; }
+  .upload-area p { font-size: 12px; color: var(--muted); }
+  .upload-area strong { font-size: 13px; color: var(--navy); display: block; margin-bottom: 4px; }
+  .upload-preview {
+    width: 100%; border-radius: 10px; margin-top: 10px;
+    max-height: 200px; object-fit: cover; display: none;
+  }
+  #fileInput { display: none; }
+
+  /* BUTTONS */
+  .btn {
+    width: 100%; padding: 14px; border: none; border-radius: 12px;
+    font-size: 14px; font-weight: 700; font-family: inherit;
+    cursor: pointer; transition: all 0.2s; display: flex;
+    align-items: center; justify-content: center; gap: 8px;
+  }
+  .btn-primary { background: var(--navy); color: white; }
+  .btn-primary:active { background: #0f1e3d; transform: scale(0.98); }
+  .btn-success { background: var(--green); color: white; }
+  .btn-gold { background: var(--gold); color: var(--navy); }
+  .btn-wa {
+    background: #25D366; color: white;
+    font-size: 13px; padding: 12px;
+  }
+  .btn-outline {
+    background: none; border: 2px solid var(--navy);
+    color: var(--navy); margin-bottom: 10px;
+  }
+  .btn-sm {
+    width: auto; padding: 7px 14px; font-size: 12px; border-radius: 8px;
+  }
+  .btn-danger { background: var(--red); color: white; }
+
+  /* ── LIST TRANSAKSI ── */
+  .trx-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px 0; border-bottom: 1px solid var(--border);
+  }
+  .trx-item:last-child { border-bottom: none; }
+  .trx-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+  }
+  .trx-info { flex: 1; min-width: 0; }
+  .trx-info .trx-name { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .trx-info .trx-meta { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .trx-amount { font-size: 14px; font-weight: 700; text-align: right; flex-shrink: 0; }
+  .trx-amount.in { color: var(--green); }
+  .trx-amount.out { color: var(--red); }
+
+  /* STATUS BADGE */
+  .badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 3px 9px; border-radius: 20px;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.3px;
+  }
+  .badge-pending { background: #fff3cd; color: #856404; }
+  .badge-approved { background: var(--green-light); color: var(--green); }
+  .badge-rejected { background: var(--red-light); color: var(--red); }
+
+  /* ── APPROVAL CARD ── */
+  .approval-card {
+    background: var(--card); border-radius: var(--radius);
+    box-shadow: var(--shadow); padding: 16px; margin-bottom: 12px;
+    border-left: 4px solid var(--gold);
+  }
+  .approval-card.approved { border-left-color: var(--green); }
+  .approval-card.rejected { border-left-color: var(--red); }
+  .approval-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+  .approval-amount { font-size: 18px; font-weight: 800; color: var(--red); }
+  .approval-detail { font-size: 12px; color: var(--muted); margin-bottom: 3px; }
+  .approval-detail strong { color: var(--text); }
+  .approval-actions { display: flex; gap: 8px; margin-top: 12px; }
+
+  /* FOTO BUKTI THUMBNAIL */
+  .bukti-thumb {
+    width: 48px; height: 48px; border-radius: 8px;
+    object-fit: cover; border: 2px solid var(--border);
+    cursor: pointer;
+  }
+
+  /* ── PROGRESS BAR ── */
+  .progress-wrap { margin-bottom: 14px; }
+  .progress-label { display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 12px; }
+  .progress-bar { height: 8px; background: var(--border); border-radius: 99px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 99px; transition: width 0.5s ease; }
+  .progress-fill.green { background: var(--green); }
+  .progress-fill.gold { background: var(--gold); }
+  .progress-fill.red { background: var(--red); }
+
+  /* ── SETUP SCREEN ── */
+  .setup-screen {
+    position: fixed; inset: 0; background: var(--navy);
+    z-index: 999; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; padding: 32px 24px;
+  }
+  .setup-screen h2 {
+    font-family: 'Playfair Display', serif;
+    color: white; font-size: 22px; text-align: center; margin-bottom: 8px;
+  }
+  .setup-screen p { color: rgba(255,255,255,0.65); font-size: 13px; text-align: center; margin-bottom: 28px; }
+  .setup-input {
+    width: 100%; padding: 14px 16px; border-radius: 12px; border: none;
+    font-size: 15px; font-family: inherit; margin-bottom: 12px;
+  }
+  .setup-btn {
+    width: 100%; padding: 15px; background: var(--gold); color: var(--navy);
+    border: none; border-radius: 12px; font-size: 15px; font-weight: 800;
+    font-family: inherit; cursor: pointer;
+  }
+  .setup-logo { font-size: 48px; margin-bottom: 16px; }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
+    background: var(--navy); color: white; padding: 12px 20px;
+    border-radius: 12px; font-size: 13px; font-weight: 600;
+    box-shadow: var(--shadow); z-index: 999; transition: transform 0.3s;
+    white-space: nowrap; max-width: 90%;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+  .toast.success { background: var(--green); }
+  .toast.error { background: var(--red); }
+
+  /* ── MODAL FOTO ── */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.85);
+    z-index: 998; display: none; align-items: center; justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-img { max-width: 95vw; max-height: 90vh; border-radius: 12px; object-fit: contain; }
+  .modal-close {
+    position: absolute; top: 16px; right: 16px;
+    background: white; border: none; border-radius: 50%;
+    width: 36px; height: 36px; font-size: 18px; cursor: pointer;
+  }
+
+  /* DIVIDER */
+  .divider { height: 1px; background: var(--border); margin: 16px 0; }
+  .section-label {
+    font-size: 11px; font-weight: 700; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;
+  }
+
+  /* EMPTY STATE */
+  .empty-state { text-align: center; padding: 32px 0; color: var(--muted); }
+  .empty-state .empty-icon { font-size: 40px; margin-bottom: 10px; }
+  .empty-state p { font-size: 13px; }
+
+  /* LOADING */
+  .loading { text-align: center; padding: 20px; color: var(--muted); font-size: 13px; }
+
+  /* scroll fix */
+  html, body { overflow-x: hidden; }
+</style>
+</head>
+<body>
+
+<!-- SETUP SCREEN -->
+<div class="setup-screen" id="setupScreen">
+  <div class="setup-logo">✝️</div>
+  <h2>Keuangan HUT GKPS<br/>Binjai ke-63</h2>
+  <p>Masukkan nama & peran Anda untuk masuk ke aplikasi</p>
+  <input class="setup-input" id="setupName" placeholder="Nama lengkap Anda" type="text"/>
+  <select class="setup-input" id="setupRole" style="margin-bottom:20px">
+    <option value="">-- Pilih Peran --</option>
+    <option value="bendahara">💰 Bendahara – Yosi Permatasari Sinaga</option>
+    <option value="ketua">👤 Ketua – Marthinus P. Hutasoit</option>
+    <option value="viewer">👁️ Lihat Saja</option>
+  </select>
+  <button class="setup-btn" onclick="doSetup()">Masuk →</button>
+  <div style="margin-top:20px;background:rgba(255,255,255,0.08);border-radius:12px;padding:14px;width:100%;text-align:left">
+    <p style="font-size:10px;color:rgba(255,255,255,0.45);margin-bottom:8px;font-weight:700;text-transform:uppercase;letter-spacing:1px">📞 Kontak Terdaftar</p>
+    <p style="font-size:12px;color:rgba(255,255,255,0.85);margin-bottom:5px">👤 Ketua &nbsp;&nbsp;&nbsp;: 0821-2496-0264</p>
+    <p style="font-size:12px;color:rgba(255,255,255,0.85)">💰 Bendahara: 0813-6148-2667</p>
+  </div>
+</div>
+
+<!-- APP HEADER -->
+<div class="app-header">
+  <div class="header-row">
+    <div>
+      <h1>HUT GKPS Binjai ke-63</h1>
+      <p id="headerUser">Memuat...</p>
+    </div>
+    <span class="header-badge">17 MEI 2026</span>
+  </div>
+</div>
+
+<!-- NAV TABS -->
+<div class="nav-tabs">
+  <button class="tab-btn active" onclick="switchTab('dashboard')">📊 Dashboard</button>
+  <button class="tab-btn" onclick="switchTab('masuk')">📥 Pemasukan</button>
+  <button class="tab-btn" onclick="switchTab('keluar')">📤 Pengeluaran</button>
+  <button class="tab-btn" onclick="switchTab('approval')">✅ Approval</button>
+  <button class="tab-btn" onclick="switchTab('riwayat')">📋 Riwayat</button>
+</div>
+
+<div class="main">
+
+  <!-- ═══════════════ DASHBOARD ═══════════════ -->
+  <div class="section active" id="sec-dashboard">
+
+    <div class="saldo-card">
+      <div class="saldo-label">Saldo Saat Ini</div>
+      <div class="saldo-value" id="dash-saldo">Rp 0</div>
+      <div class="saldo-status" id="dash-status">⏳ Belum ada data</div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-box green">
+        <div class="label">Total Masuk</div>
+        <div class="value" id="dash-masuk">Rp 0</div>
+        <div class="sub" id="dash-masuk-n">0 transaksi</div>
+      </div>
+      <div class="stat-box red">
+        <div class="label">Total Keluar</div>
+        <div class="value" id="dash-keluar">Rp 0</div>
+        <div class="sub" id="dash-keluar-n">0 transaksi</div>
+      </div>
+      <div class="stat-box gold">
+        <div class="label">Anggaran RAB</div>
+        <div class="value">Rp 99,9 Jt</div>
+        <div class="sub">Total RAB I + II</div>
+      </div>
+      <div class="stat-box blue">
+        <div class="label">Menunggu ACC</div>
+        <div class="value" id="dash-pending">0</div>
+        <div class="sub">perlu persetujuan</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">
+        <div class="icon" style="background:#eaf1fb">📈</div>
+        Serapan Anggaran
+      </div>
+      <div id="progressBars">
+        <div class="progress-wrap">
+          <div class="progress-label"><span>RAB I – Kebaktian</span><span id="pct1">0%</span></div>
+          <div class="progress-bar"><div class="progress-fill gold" id="bar1" style="width:0%"></div></div>
+          <div style="font-size:11px;color:var(--muted);margin-top:3px">Anggaran: Rp 15.075.000</div>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-label"><span>RAB II – Perlombaan</span><span id="pct2">0%</span></div>
+          <div class="progress-bar"><div class="progress-fill gold" id="bar2" style="width:0%"></div></div>
+          <div style="font-size:11px;color:var(--muted);margin-top:3px">Anggaran: Rp 84.900.000</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">
+        <div class="icon" style="background:#fff8e1">🕐</div>
+        Transaksi Terakhir
+      </div>
+      <div id="dash-recent">
+        <div class="empty-state"><div class="empty-icon">📭</div><p>Belum ada transaksi</p></div>
+      </div>
+    </div>
+
+    <!-- NOTIF KETUA -->
+    <div id="ketuaNotifSection" style="display:none">
+      <div class="card" style="border:2px solid var(--gold)">
+        <div class="card-title" style="color:var(--gold)">
+          <div class="icon" style="background:#fff8e1">🔔</div>
+          Notifikasi WhatsApp
+        </div>
+        <div style="background:var(--bg);border-radius:10px;padding:10px;margin-bottom:12px">
+          <p style="font-size:11px;color:var(--muted);margin-bottom:4px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px">Tujuan Notifikasi</p>
+          <p style="font-size:12px;color:var(--text);margin-bottom:3px">👤 <strong>Ketua</strong> — 0821-2496-0264</p>
+          <p style="font-size:11px;color:var(--muted)">Notif otomatis: setiap pemasukan baru &amp; setiap pengajuan ACC</p>
+        </div>
+        <div style="background:var(--bg);border-radius:10px;padding:10px;margin-bottom:12px">
+          <p style="font-size:11px;color:var(--muted);margin-bottom:4px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px">Balasan ke Bendahara</p>
+          <p style="font-size:12px;color:var(--text);margin-bottom:3px">💰 <strong>Bendahara</strong> — 0813-6148-2667</p>
+          <p style="font-size:11px;color:var(--muted)">Notif otomatis: setelah Ketua setujui atau tolak pengajuan</p>
+        </div>
+        <button class="btn btn-wa" onclick="kirimWA()">
+          <span>💬</span> Kirim Laporan Ringkasan ke Ketua
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════ PEMASUKAN ═══════════════ -->
+  <div class="section" id="sec-masuk">
+    <div id="masukFormWrap">
+    <div class="card">
+      <div class="card-title">
+        <div class="icon" style="background:var(--green-light)">📥</div>
+        Catat Pemasukan
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tanggal *</label>
+        <input type="date" class="form-input" id="m-tanggal"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Sumber Dana / Pemberi *</label>
+        <input type="text" class="form-input" id="m-sumber" placeholder="cth: Kolekte Minggu 4 Mei"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Kategori *</label>
+        <select class="form-select" id="m-kategori">
+          <option value="">-- Pilih --</option>
+          <option>Kolekte / Persembahan</option>
+          <option>Sumbangan Jemaat</option>
+          <option>Donasi Khusus</option>
+          <option>Iuran Panitia</option>
+          <option>Hasil Lelang / Janji Iman</option>
+          <option>Lain-lain</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Jumlah (Rp) *</label>
+        <input type="number" class="form-input" id="m-jumlah" placeholder="0" inputmode="numeric"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Keterangan</label>
+        <textarea class="form-textarea" id="m-ket" placeholder="Catatan tambahan..."></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Foto Bukti (opsional)</label>
+        <div class="upload-area" onclick="document.getElementById('fileInputMasuk').click()">
+          <div class="upload-icon">📸</div>
+          <strong>Tap untuk upload foto</strong>
+          <p>Foto struk atau bukti transfer</p>
+          <img class="upload-preview" id="previewMasuk"/>
+        </div>
+        <input type="file" id="fileInputMasuk" accept="image/*" capture="environment"
+               onchange="previewImg(this,'previewMasuk')"/>
+      </div>
+      <button class="btn btn-success" onclick="simpanMasuk()">💾 Simpan Pemasukan</button>
+    </div>
+    </div>
+    <div id="masukReadonly" style="display:none">
+      <div class="card" style="text-align:center;padding:32px">
+        <div style="font-size:40px;margin-bottom:12px">🔒</div>
+        <p style="color:var(--muted);font-size:13px">Hanya Bendahara yang dapat mencatat pemasukan.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ PENGELUARAN ═══════════════ -->
+  <div class="section" id="sec-keluar">
+    <div id="keluarFormWrap">
+    <div class="card">
+      <div class="card-title">
+        <div class="icon" style="background:var(--red-light)">📤</div>
+        Catat Pengeluaran
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tanggal *</label>
+        <input type="date" class="form-input" id="k-tanggal"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Seksi *</label>
+        <select class="form-select" id="k-seksi">
+          <option value="">-- Pilih Seksi --</option>
+          <option>Sie Konsumsi</option>
+          <option>Sie Acara / Hiburan</option>
+          <option>Sie Perlombaan</option>
+          <option>Sie Tempat / Parkir</option>
+          <option>Sie Dokumentasi</option>
+          <option>Sie Kesehatan</option>
+          <option>Pengadaan Alat Musik</option>
+          <option>Pengadaan Sound System / TV</option>
+          <option>Operasional / Lain-lain</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Uraian Pengeluaran *</label>
+        <input type="text" class="form-input" id="k-uraian" placeholder="cth: Konsumsi nasi kotak 100 pcs"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Jumlah (Rp) *</label>
+        <input type="number" class="form-input" id="k-jumlah" placeholder="0" inputmode="numeric"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Keterangan / Keperluan</label>
+        <textarea class="form-textarea" id="k-ket" placeholder="Jelaskan keperluan pengeluaran ini..."></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">📸 Foto Nota / Bukti *</label>
+        <div class="upload-area" onclick="document.getElementById('fileInputKeluar').click()">
+          <div class="upload-icon">🧾</div>
+          <strong>Foto nota / kwitansi</strong>
+          <p>Wajib untuk pengeluaran > Rp 100.000</p>
+          <img class="upload-preview" id="previewKeluar"/>
+        </div>
+        <input type="file" id="fileInputKeluar" accept="image/*" capture="environment"
+               onchange="previewImg(this,'previewKeluar')"/>
+      </div>
+
+      <div style="background:var(--blue-light);border-radius:10px;padding:12px;margin-bottom:14px">
+        <p style="font-size:12px;color:var(--navy)">
+          ⚠️ <strong>Pengeluaran akan dikirim ke Ketua untuk disetujui</strong> sebelum dicatat sebagai pengeluaran resmi.
+        </p>
+      </div>
+
+      <button class="btn btn-primary" onclick="ajukanKeluar()">
+        📨 Ajukan ke Ketua untuk ACC
+      </button>
+    </div>
+    </div>
+    <div id="keluarReadonly" style="display:none">
+      <div class="card" style="text-align:center;padding:32px">
+        <div style="font-size:40px;margin-bottom:12px">🔒</div>
+        <p style="color:var(--muted);font-size:13px">Hanya Bendahara yang dapat mencatat pengeluaran.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ APPROVAL ═══════════════ -->
+  <div class="section" id="sec-approval">
+    <div id="approvalList">
+      <div class="loading">Memuat data...</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ RIWAYAT ═══════════════ -->
+  <div class="section" id="sec-riwayat">
+    <div class="card" style="padding:12px 14px;margin-bottom:14px">
+      <div style="display:flex;gap:8px;align-items:center">
+        <select class="form-select" id="filterType" onchange="loadRiwayat()" style="flex:1;padding:8px 10px;font-size:13px">
+          <option value="">Semua</option>
+          <option value="masuk">Pemasukan</option>
+          <option value="keluar">Pengeluaran</option>
+        </select>
+        <button class="btn btn-outline btn-sm" onclick="exportRiwayat()" style="flex:none;white-space:nowrap">
+          📥 Export
+        </button>
+      </div>
+    </div>
+    <div id="riwayatList">
+      <div class="loading">Memuat riwayat...</div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<!-- MODAL FOTO -->
+<div class="modal-overlay" id="modalFoto" onclick="closeFotoModal()">
+  <button class="modal-close" onclick="closeFotoModal()">✕</button>
+  <img class="modal-img" id="modalImg" src="" alt="Bukti"/>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// CONFIG — GANTI SESUAI KEBUTUHAN
+// ═══════════════════════════════════════════════════════
+const CONFIG = {
+  // ✅ No WA sudah diisi (format internasional tanpa + dan tanpa 0 di depan)
+  WA_KETUA:     "6282124960264",   // Marthinus P. Hutasoit
+  WA_BENDAHARA: "6281361482667",   // Yosi Permatasari Sinaga
+
+  // Google Apps Script Web App URL (lihat panduan setup)
+  GAS_URL: "",   // ← GAS_URL: "https://script.google.com/macros/s/AKfycb.../exec",
+
+  // Nama
+  NAMA_KETUA:     "Marthinus P. Hutasoit",
+  NAMA_BENDAHARA: "Yosi Permatasari Sinaga",
+};
+
+// ═══════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════
+let USER = { name: "", role: "" };
+let DATA = {
+  masuk: [],
+  keluar: [],
+  pending: [],
+};
+
+// ═══════════════════════════════════════════════════════
+// SETUP / LOGIN
+// ═══════════════════════════════════════════════════════
+function doSetup() {
+  const name = document.getElementById('setupName').value.trim();
+  const role = document.getElementById('setupRole').value;
+  if (!name || !role) { showToast('Isi nama dan peran dulu!', 'error'); return; }
+  USER = { name, role };
+  localStorage.setItem('gkps_user', JSON.stringify(USER));
+  document.getElementById('setupScreen').style.display = 'none';
+  initApp();
+}
+
+function initApp() {
+  document.getElementById('headerUser').textContent =
+    `${USER.role === 'bendahara' ? '💰' : USER.role === 'ketua' ? '👤' : '👁️'} ${USER.name}`;
+
+  // Tampilkan/sembunyikan form berdasarkan peran
+  const isBendahara = USER.role === 'bendahara';
+  document.getElementById('masukFormWrap').style.display = isBendahara ? 'block' : 'none';
+  document.getElementById('masukReadonly').style.display = isBendahara ? 'none' : 'block';
+  document.getElementById('keluarFormWrap').style.display = isBendahara ? 'block' : 'none';
+  document.getElementById('keluarReadonly').style.display = isBendahara ? 'none' : 'block';
+
+  // Tombol kirim WA hanya untuk bendahara
+  if (isBendahara) {
+    document.getElementById('ketuaNotifSection').style.display = 'block';
+  }
+
+  // Set tanggal hari ini
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('m-tanggal').value = today;
+  document.getElementById('k-tanggal').value = today;
+
+  loadData();
+}
+
+// Check sudah login
+window.onload = function() {
+  const saved = localStorage.getItem('gkps_user');
+  if (saved) {
+    USER = JSON.parse(saved);
+    document.getElementById('setupScreen').style.display = 'none';
+    initApp();
+  }
+};
+
+// ═══════════════════════════════════════════════════════
+// DATA — LocalStorage + GAS sync
+// ═══════════════════════════════════════════════════════
+function saveLocal() {
+  localStorage.setItem('gkps_data', JSON.stringify(DATA));
+}
+
+function loadData() {
+  // Load dari localStorage dulu (offline)
+  const saved = localStorage.getItem('gkps_data');
+  if (saved) {
+    DATA = JSON.parse(saved);
+  }
+
+  // Sync dari GAS jika ada URL
+  if (CONFIG.GAS_URL) {
+    fetch(CONFIG.GAS_URL + '?action=getAll')
+      .then(r => r.json())
+      .then(d => {
+        if (d.masuk) DATA.masuk = d.masuk;
+        if (d.keluar) DATA.keluar = d.keluar;
+        if (d.pending) DATA.pending = d.pending;
+        saveLocal();
+        updateUI();
+      })
+      .catch(() => console.log('Offline mode'));
+  }
+
+  updateUI();
+}
+
+function syncToGAS(action, payload) {
+  if (!CONFIG.GAS_URL) return Promise.resolve({ ok: true, offline: true });
+  return fetch(CONFIG.GAS_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ action, ...payload })
+  }).then(r => r.json());
+}
+
+// ═══════════════════════════════════════════════════════
+// TABS
+// ═══════════════════════════════════════════════════════
+function switchTab(tab) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('sec-' + tab).classList.add('active');
+  event.target.classList.add('active');
+  if (tab === 'riwayat') loadRiwayat();
+  if (tab === 'approval') loadApproval();
+}
+
+// ═══════════════════════════════════════════════════════
+// UPDATE UI
+// ═══════════════════════════════════════════════════════
+function updateUI() {
+  const totalMasuk = DATA.masuk.reduce((a,b) => a + Number(b.jumlah), 0);
+  const totalKeluar = DATA.keluar.reduce((a,b) => a + Number(b.jumlah), 0);
+  const saldo = totalMasuk - totalKeluar;
+  const pending = DATA.pending.filter(p => p.status === 'pending').length;
+
+  document.getElementById('dash-saldo').textContent = formatRp(saldo);
+  document.getElementById('dash-status').textContent =
+    saldo > 0 ? '✅ Surplus' : saldo < 0 ? '❌ Defisit' : '⚖️ Balance';
+
+  document.getElementById('dash-masuk').textContent = formatRp(totalMasuk);
+  document.getElementById('dash-masuk-n').textContent = `${DATA.masuk.length} transaksi`;
+  document.getElementById('dash-keluar').textContent = formatRp(totalKeluar);
+  document.getElementById('dash-keluar-n').textContent = `${DATA.keluar.length} transaksi`;
+  document.getElementById('dash-pending').textContent = pending;
+
+  // Progress bars
+  const rab1 = 15075000, rab2 = 84900000;
+  const k1 = DATA.keluar.filter(k => k.rab === 'I').reduce((a,b)=>a+Number(b.jumlah),0);
+  const k2 = DATA.keluar.filter(k => k.rab === 'II').reduce((a,b)=>a+Number(b.jumlah),0);
+  const kAll = DATA.keluar.reduce((a,b)=>a+Number(b.jumlah),0);
+
+  const p1 = Math.min(100, Math.round(k1/rab1*100)) || Math.min(100, Math.round(kAll*0.15/rab1*100));
+  const p2 = Math.min(100, Math.round(k2/rab2*100)) || Math.min(100, Math.round(kAll*0.85/rab2*100));
+
+  document.getElementById('pct1').textContent = p1 + '%';
+  document.getElementById('bar1').style.width = p1 + '%';
+  document.getElementById('bar1').className = 'progress-fill ' + (p1>100?'red':p1>80?'gold':'green');
+
+  document.getElementById('pct2').textContent = p2 + '%';
+  document.getElementById('bar2').style.width = p2 + '%';
+  document.getElementById('bar2').className = 'progress-fill ' + (p2>100?'red':p2>80?'gold':'green');
+
+  // Recent
+  const recent = [...DATA.masuk.map(m=>({...m,type:'masuk'})),
+                   ...DATA.keluar.map(k=>({...k,type:'keluar'}))]
+    .sort((a,b) => new Date(b.tanggal)-new Date(a.tanggal)).slice(0,5);
+
+  const recentEl = document.getElementById('dash-recent');
+  if (!recent.length) {
+    recentEl.innerHTML = `<div class="empty-state"><div class="empty-icon">📭</div><p>Belum ada transaksi</p></div>`;
+  } else {
+    recentEl.innerHTML = recent.map(t => trxHtml(t)).join('');
+  }
+}
+
+function trxHtml(t) {
+  const isMasuk = t.type === 'masuk';
+  return `<div class="trx-item">
+    <div class="trx-icon" style="background:${isMasuk?'var(--green-light)':'var(--red-light)'}">
+      ${isMasuk?'📥':'📤'}
+    </div>
+    <div class="trx-info">
+      <div class="trx-name">${isMasuk ? (t.sumber||'Pemasukan') : (t.uraian||'Pengeluaran')}</div>
+      <div class="trx-meta">${t.tanggal} • ${isMasuk?(t.kategori||''):(t.seksi||'')}</div>
+    </div>
+    <div class="trx-amount ${isMasuk?'in':'out'}">
+      ${isMasuk?'+':'-'}${formatRp(t.jumlah)}
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════════
+// SIMPAN PEMASUKAN
+// ═══════════════════════════════════════════════════════
+async function simpanMasuk() {
+  const tanggal   = document.getElementById('m-tanggal').value;
+  const sumber    = document.getElementById('m-sumber').value.trim();
+  const kategori  = document.getElementById('m-kategori').value;
+  const jumlah    = document.getElementById('m-jumlah').value;
+  const ket       = document.getElementById('m-ket').value.trim();
+  const file      = document.getElementById('fileInputMasuk').files[0];
+
+  if (!tanggal||!sumber||!kategori||!jumlah) {
+    showToast('Lengkapi semua field wajib!', 'error'); return;
+  }
+
+  const id = Date.now().toString();
+  let fotoBase64 = '';
+  if (file) fotoBase64 = await toBase64(file);
+
+  const record = { id, tanggal, sumber, kategori, jumlah: Number(jumlah),
+                   ket, foto: fotoBase64, oleh: USER.name, type: 'masuk',
+                   waktu: new Date().toISOString() };
+
+  DATA.masuk.push(record);
+  saveLocal();
+  updateUI();
+
+  // Sync GAS
+  syncToGAS('addMasuk', { record }).catch(() => {});
+
+  // Reset form
+  document.getElementById('m-sumber').value = '';
+  document.getElementById('m-jumlah').value = '';
+  document.getElementById('m-ket').value = '';
+  document.getElementById('m-kategori').value = '';
+  document.getElementById('previewMasuk').style.display = 'none';
+  document.getElementById('fileInputMasuk').value = '';
+
+  showToast('✅ Pemasukan disimpan! Notif WA ke Ketua dikirim...', 'success');
+
+  // Notif WA ke Ketua setiap ada pemasukan baru
+  setTimeout(() => kirimWAMasuk(record), 800);
+}
+
+// ═══════════════════════════════════════════════════════
+// AJUKAN PENGELUARAN (ke approval)
+// ═══════════════════════════════════════════════════════
+async function ajukanKeluar() {
+  const tanggal = document.getElementById('k-tanggal').value;
+  const seksi   = document.getElementById('k-seksi').value;
+  const uraian  = document.getElementById('k-uraian').value.trim();
+  const jumlah  = document.getElementById('k-jumlah').value;
+  const ket     = document.getElementById('k-ket').value.trim();
+  const file    = document.getElementById('fileInputKeluar').files[0];
+
+  if (!tanggal||!seksi||!uraian||!jumlah) {
+    showToast('Lengkapi semua field wajib!', 'error'); return;
+  }
+
+  const id = Date.now().toString();
+  let fotoBase64 = '';
+  if (file) fotoBase64 = await toBase64(file);
+
+  const record = { id, tanggal, seksi, uraian, jumlah: Number(jumlah),
+                   ket, foto: fotoBase64, oleh: USER.name, status: 'pending',
+                   type: 'keluar', waktu: new Date().toISOString() };
+
+  DATA.pending.push(record);
+  saveLocal();
+  updateUI();
+
+  syncToGAS('addPending', { record }).catch(() => {});
+
+  // Auto buka WA ke ketua
+  kirimWAApproval(record);
+
+  // Reset
+  document.getElementById('k-seksi').value = '';
+  document.getElementById('k-uraian').value = '';
+  document.getElementById('k-jumlah').value = '';
+  document.getElementById('k-ket').value = '';
+  document.getElementById('previewKeluar').style.display = 'none';
+  document.getElementById('fileInputKeluar').value = '';
+
+  showToast('📨 Pengajuan dikirim! WA ke Ketua dibuka...', 'success');
+}
+
+// ═══════════════════════════════════════════════════════
+// APPROVAL
+// ═══════════════════════════════════════════════════════
+function loadApproval() {
+  const el = document.getElementById('approvalList');
+  const pending = DATA.pending.filter(p => p.status === 'pending');
+  const done = DATA.pending.filter(p => p.status !== 'pending');
+  const isKetua = USER.role === 'ketua';
+
+  if (!DATA.pending.length) {
+    el.innerHTML = `<div class="empty-state"><div class="empty-icon">✅</div><p>Tidak ada pengajuan</p></div>`;
+    return;
+  }
+
+  let html = '';
+
+  if (pending.length) {
+    html += `<div class="section-label">⏳ Menunggu Persetujuan (${pending.length})</div>`;
+    html += pending.map(p => approvalCardHtml(p, isKetua)).join('');
+  }
+
+  if (done.length) {
+    html += `<div class="section-label" style="margin-top:16px">📋 Sudah Diproses</div>`;
+    html += done.map(p => approvalCardHtml(p, false)).join('');
+  }
+
+  el.innerHTML = html;
+}
+
+function approvalCardHtml(p, showActions) {
+  const badgeClass = p.status==='approved'?'badge-approved':p.status==='rejected'?'badge-rejected':'badge-pending';
+  const badgeText = p.status==='approved'?'✅ Disetujui':p.status==='rejected'?'❌ Ditolak':'⏳ Menunggu';
+  const fotoHtml = p.foto
+    ? `<img src="${p.foto}" class="bukti-thumb" onclick="openFoto('${p.id}')" alt="bukti"/>`
+    : '<span style="font-size:11px;color:var(--muted)">Tidak ada foto</span>';
+
+  return `<div class="approval-card ${p.status}" id="acard-${p.id}">
+    <div class="approval-header">
+      <div>
+        <div class="approval-amount">${formatRp(p.jumlah)}</div>
+        <span class="badge ${badgeClass}">${badgeText}</span>
+      </div>
+      ${fotoHtml}
+    </div>
+    <div class="approval-detail"><strong>Seksi:</strong> ${p.seksi}</div>
+    <div class="approval-detail"><strong>Uraian:</strong> ${p.uraian}</div>
+    <div class="approval-detail"><strong>Tanggal:</strong> ${p.tanggal}</div>
+    <div class="approval-detail"><strong>Diajukan oleh:</strong> ${p.oleh}</div>
+    ${p.ket ? `<div class="approval-detail"><strong>Keterangan:</strong> ${p.ket}</div>` : ''}
+    ${showActions && p.status==='pending' ? `
+    <div class="approval-actions">
+      <button class="btn btn-success btn-sm" onclick="approve('${p.id}')">✅ Setujui</button>
+      <button class="btn btn-danger btn-sm" onclick="reject('${p.id}')">❌ Tolak</button>
+      <button class="btn btn-wa btn-sm" onclick="kirimWAApproval(DATA.pending.find(x=>x.id==='${p.id}'))">💬 WA</button>
+    </div>` : ''}
+    ${!showActions && p.status==='pending' ? `
+    <div style="margin-top:10px">
+      <button class="btn btn-wa btn-sm" onclick="kirimWAApproval(DATA.pending.find(x=>x.id==='${p.id}'))">
+        💬 Ingatkan Ketua via WA
+      </button>
+    </div>` : ''}
+  </div>`;
+}
+
+function approve(id) {
+  const idx = DATA.pending.findIndex(p => p.id === id);
+  if (idx < 0) return;
+  const p = DATA.pending[idx];
+  DATA.pending[idx].status = 'approved';
+  DATA.pending[idx].approvedBy = USER.name;
+  DATA.pending[idx].approvedAt = new Date().toISOString();
+
+  DATA.keluar.push({ ...p, type:'keluar' });
+  saveLocal();
+  syncToGAS('approve', { id, approvedBy: USER.name }).catch(()=>{});
+  showToast('✅ Disetujui! WA ke Bendahara dikirim...', 'success');
+
+  // Notif balik ke Bendahara
+  setTimeout(() => kirimWAHasilApproval(p, true), 800);
+
+  updateUI();
+  loadApproval();
+}
+
+function reject(id) {
+  const alasan = prompt('Alasan penolakan:');
+  if (alasan === null) return;
+  const idx = DATA.pending.findIndex(p => p.id === id);
+  if (idx < 0) return;
+  const p = DATA.pending[idx];
+  DATA.pending[idx].status = 'rejected';
+  DATA.pending[idx].rejectedBy = USER.name;
+  DATA.pending[idx].alasan = alasan;
+  saveLocal();
+  syncToGAS('reject', { id, rejectedBy: USER.name, alasan }).catch(()=>{});
+  showToast('❌ Ditolak. WA ke Bendahara dikirim...', 'error');
+
+  // Notif balik ke Bendahara
+  setTimeout(() => kirimWAHasilApproval(p, false, alasan), 800);
+
+  updateUI();
+  loadApproval();
+}
+
+// ═══════════════════════════════════════════════════════
+// RIWAYAT
+// ═══════════════════════════════════════════════════════
+function loadRiwayat() {
+  const filter = document.getElementById('filterType').value;
+  let all = [
+    ...DATA.masuk.map(m=>({...m,type:'masuk'})),
+    ...DATA.keluar.map(k=>({...k,type:'keluar'}))
+  ].sort((a,b) => new Date(b.tanggal)-new Date(a.tanggal));
+
+  if (filter) all = all.filter(t => t.type === filter);
+
+  const el = document.getElementById('riwayatList');
+  if (!all.length) {
+    el.innerHTML = `<div class="empty-state"><div class="empty-icon">📭</div><p>Tidak ada data</p></div>`;
+    return;
+  }
+
+  el.innerHTML = `<div class="card">` +
+    all.map(t => `${trxHtml(t)}${t.foto?`<div style="padding:4px 0 8px 48px"><img src="${t.foto}" class="bukti-thumb" onclick="openFotoSrc('${t.foto}')" alt="bukti"/></div>`:''}`).join('') +
+    `</div>`;
+}
+
+// ═══════════════════════════════════════════════════════
+// WA NOTIFIKASI
+// ═══════════════════════════════════════════════════════
+
+// 1. Notif pemasukan baru → otomatis ke Ketua
+function kirimWAMasuk(p) {
+  const totalMasuk = DATA.masuk.reduce((a,b)=>a+Number(b.jumlah),0);
+  const totalKeluar = DATA.keluar.reduce((a,b)=>a+Number(b.jumlah),0);
+  const saldo = totalMasuk - totalKeluar;
+  const tgl = new Date().toLocaleDateString('id-ID',{day:'2-digit',month:'long',year:'numeric'});
+
+  const msg =
+    `💰 *PEMASUKAN BARU*\n` +
+    `*HUT GKPS Binjai ke-63*\n` +
+    `📅 ${tgl}\n\n` +
+    `📋 *Sumber  :* ${p.sumber}\n` +
+    `🗂️ *Kategori:* ${p.kategori}\n` +
+    `💵 *Jumlah  :* *${formatRp(p.jumlah)}*\n` +
+    (p.ket ? `📝 *Ket     :* ${p.ket}\n` : ``) +
+    `\n━━━━━━━━━━━━━━━\n` +
+    `📊 *Saldo Terkini: ${formatRp(saldo)}*\n` +
+    `   Total Masuk : ${formatRp(totalMasuk)}\n` +
+    `   Total Keluar: ${formatRp(totalKeluar)}\n` +
+    `━━━━━━━━━━━━━━━\n` +
+    `Dicatat oleh: ${p.oleh}\n` +
+    `_Aplikasi Keuangan HUT GKPS Binjai 2026_ 🙏`;
+
+  window.open(`https://wa.me/${CONFIG.WA_KETUA}?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+// 2. Laporan ringkasan manual → ke Ketua
+function kirimWA() {
+  const totalMasuk = DATA.masuk.reduce((a,b)=>a+Number(b.jumlah),0);
+  const totalKeluar = DATA.keluar.reduce((a,b)=>a+Number(b.jumlah),0);
+  const saldo = totalMasuk - totalKeluar;
+  const pending = DATA.pending.filter(p=>p.status==='pending').length;
+  const tgl = new Date().toLocaleDateString('id-ID',{day:'2-digit',month:'long',year:'numeric'});
+
+  const msg =
+    `📊 *LAPORAN KEUANGAN*\n` +
+    `*HUT GKPS Binjai ke-63*\n` +
+    `📅 ${tgl}\n\n` +
+    `💰 Total Pemasukan : *${formatRp(totalMasuk)}* (${DATA.masuk.length} transaksi)\n` +
+    `💸 Total Pengeluaran: *${formatRp(totalKeluar)}* (${DATA.keluar.length} transaksi)\n` +
+    `━━━━━━━━━━━━━━━\n` +
+    `💵 *Saldo Saat Ini: ${formatRp(saldo)}*\n` +
+    `━━━━━━━━━━━━━━━\n` +
+    (pending > 0
+      ? `⏳ *${pending} pengajuan menunggu ACC Bapak/Ibu*\n\n`
+      : `✅ Tidak ada pengajuan menunggu\n\n`) +
+    `Dikirim oleh: ${USER.name}\n` +
+    `_Aplikasi Keuangan HUT GKPS Binjai 2026_ 🙏`;
+
+  window.open(`https://wa.me/${CONFIG.WA_KETUA}?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+// 3. Notif pengajuan pengeluaran → ke Ketua (minta ACC)
+function kirimWAApproval(p) {
+  if (!p) return;
+  const msg =
+    `🔔 *MOHON ACC PENGELUARAN*\n` +
+    `*HUT GKPS Binjai ke-63*\n\n` +
+    `Bendahara *${p.oleh}* mengajukan pengeluaran:\n\n` +
+    `📋 *Seksi  :* ${p.seksi}\n` +
+    `📝 *Uraian :* ${p.uraian}\n` +
+    `💰 *Jumlah :* *${formatRp(p.jumlah)}*\n` +
+    `📅 *Tanggal:* ${p.tanggal}\n` +
+    (p.ket ? `💬 *Ket    :* ${p.ket}\n` : ``) +
+    `\nMohon buka aplikasi → Tab ✅ *Approval* untuk menyetujui atau menolak.\n\n` +
+    `_Aplikasi Keuangan HUT GKPS Binjai 2026_ 🙏`;
+
+  window.open(`https://wa.me/${CONFIG.WA_KETUA}?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+// 4. Notif hasil approval → balik ke Bendahara
+function kirimWAHasilApproval(p, disetujui, alasan='') {
+  const msg = disetujui
+    ? `✅ *ACC DITERIMA*\n` +
+      `*HUT GKPS Binjai ke-63*\n\n` +
+      `Pengeluaran berikut telah *DISETUJUI* oleh ${CONFIG.NAMA_KETUA}:\n\n` +
+      `📋 *Seksi  :* ${p.seksi}\n` +
+      `📝 *Uraian :* ${p.uraian}\n` +
+      `💰 *Jumlah :* *${formatRp(p.jumlah)}*\n\n` +
+      `Silakan proses pembayaran dan simpan nota. 🙏`
+    : `❌ *PENGAJUAN DITOLAK*\n` +
+      `*HUT GKPS Binjai ke-63*\n\n` +
+      `Pengeluaran berikut *DITOLAK* oleh ${CONFIG.NAMA_KETUA}:\n\n` +
+      `📋 *Seksi  :* ${p.seksi}\n` +
+      `📝 *Uraian :* ${p.uraian}\n` +
+      `💰 *Jumlah :* ${formatRp(p.jumlah)}\n\n` +
+      `💬 *Alasan :* ${alasan}\n\n` +
+      `Mohon diskusikan lebih lanjut. 🙏`;
+
+  window.open(`https://wa.me/${CONFIG.WA_BENDAHARA}?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+// ═══════════════════════════════════════════════════════
+// FOTO MODAL
+// ═══════════════════════════════════════════════════════
+function openFoto(id) {
+  const p = DATA.pending.find(x=>x.id===id);
+  if (p && p.foto) openFotoSrc(p.foto);
+}
+function openFotoSrc(src) {
+  document.getElementById('modalImg').src = src;
+  document.getElementById('modalFoto').classList.add('open');
+}
+function closeFotoModal() {
+  document.getElementById('modalFoto').classList.remove('open');
+}
+
+// ═══════════════════════════════════════════════════════
+// EXPORT CSV
+// ═══════════════════════════════════════════════════════
+function exportRiwayat() {
+  const filter = document.getElementById('filterType').value;
+  let rows = [['No','Tanggal','Tipe','Keterangan','Kategori/Seksi','Jumlah','Oleh']];
+  let all = [
+    ...DATA.masuk.map(m=>({...m,type:'masuk'})),
+    ...DATA.keluar.map(k=>({...k,type:'keluar'}))
+  ].sort((a,b)=>new Date(a.tanggal)-new Date(b.tanggal));
+  if (filter) all = all.filter(t=>t.type===filter);
+
+  all.forEach((t,i) => {
+    rows.push([
+      i+1, t.tanggal,
+      t.type==='masuk'?'Pemasukan':'Pengeluaran',
+      t.type==='masuk'?(t.sumber||''):(t.uraian||''),
+      t.type==='masuk'?(t.kategori||''):(t.seksi||''),
+      t.jumlah, t.oleh
+    ]);
+  });
+
+  const csv = rows.map(r=>r.join(',')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `Keuangan_GKPS_${new Date().toISOString().split('T')[0]}.csv`;
+  a.click();
+  showToast('📥 File CSV diunduh!', 'success');
+}
+
+// ═══════════════════════════════════════════════════════
+// UTILS
+// ═══════════════════════════════════════════════════════
+function formatRp(n) {
+  return 'Rp ' + Number(n||0).toLocaleString('id-ID');
+}
+
+function previewImg(input, previewId) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = document.getElementById(previewId);
+    img.src = e.target.result;
+    img.style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+}
+
+function toBase64(file) {
+  return new Promise((res, rej) => {
+    const reader = new FileReader();
+    reader.onload = e => res(e.target.result);
+    reader.onerror = rej;
+    reader.readAsDataURL(file);
+  });
+}
+
+let toastTimer;
+function showToast(msg, type='') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = `toast show ${type}`;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 3000);
+}
+</script>
+</body>
+</html>
